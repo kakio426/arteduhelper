@@ -14,7 +14,8 @@ import {
     Video,
     Clock,
     X,
-    FileText
+    FileText,
+    ChevronRight
 } from 'lucide-react';
 
 const SetupForm = ({ state, dispatch, onStart }) => {
