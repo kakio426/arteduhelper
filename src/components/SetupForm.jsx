@@ -4,6 +4,7 @@ import { extractVideoId, getVideoInfo } from '../utils/youtubeParser';
 import { cleanTranscript } from '../utils/transcriptParser';
 import { generateStepsWithAI } from '../utils/aiService';
 import VideoLooper from './VideoLooper';
+import { MOCK_CLASS_DATA } from '../data/mockData';
 import {
     Sparkles,
     Plus,
@@ -94,6 +95,21 @@ const SetupForm = ({ state, dispatch, onStart }) => {
             setShowImport(false);
             setTranscriptText('');
         }
+    };
+
+    const handleDemoMode = async () => {
+        // Load mock video and settings
+        dispatch({ type: ACTIONS.SET_VIDEO_URL, payload: MOCK_CLASS_DATA.videoUrl });
+        dispatch({ type: ACTIONS.SET_INTERVAL, payload: MOCK_CLASS_DATA.stepInterval });
+
+        // Load mock steps with images
+        // We need to fetch images and convert to base64 to be consistent with FileReader logic?
+        // Actually, InstructionViewer treats imageUrl as src, so imported module path is fine for dev/prod.
+        // But let's check if the reducer expects base64. 
+        // The reducer just stores what it gets. InstructionViewer uses <img src={...} />.
+        // So imported paths (assets/...) work fine.
+
+        dispatch({ type: ACTIONS.REPLACE_STEPS, payload: MOCK_CLASS_DATA.steps });
     };
 
     const handleAIGenerate = async () => {

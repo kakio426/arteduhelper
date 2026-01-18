@@ -45,22 +45,24 @@ const ClassRoom = ({ state, onBack }) => {
                 height: 'calc(100vh - 70px)',
                 overflow: 'hidden'
             }}>
-                {/* Left: Video */}
+                {/* Left: Video (Main Focus) */}
                 <div style={{
-                    flex: 1,
+                    flex: 1.5,
                     background: '#000',
                     borderRadius: '2rem',
                     overflow: 'hidden',
                     boxShadow: '0 20px 50px rgba(0,0,0,0.1)',
-                    position: 'relative'
+                    position: 'relative',
+                    minWidth: '0' // flex item shrink safety
                 }}>
                     <VideoLooper videoId={videoId} />
                 </div>
 
-                {/* Right: Instructions */}
+                {/* Right: Instructions (Supporting Info) */}
                 <div style={{
                     flex: 1,
-                    height: '100%'
+                    height: '100%',
+                    minWidth: '350px' // Prevent instructions from getting too narrow
                 }}>
                     <InstructionViewer
                         steps={state.steps}

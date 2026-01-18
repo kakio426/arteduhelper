@@ -61,30 +61,54 @@ const InstructionViewer = ({ steps, interval }) => {
             </div>
 
             {/* Instruction Body */}
-            <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center', padding: '0.5rem', gap: '1.5rem', width: '100%' }}>
-                <div key={currentIndex} className="fade-in" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '2rem', width: '100%' }}>
+            <div style={{
+                flex: 1,
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                textAlign: 'center',
+                padding: '1rem',
+                gap: '1.5rem',
+                width: '100%',
+                overflowY: 'auto', // Handle long text with scrolling
+                scrollbarWidth: 'thin'
+            }}>
+                <div key={currentIndex} className="fade-in" style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    gap: '1.5rem',
+                    width: '100%',
+                    padding: '1rem 0'
+                }}>
                     {currentStep.imageUrl && (
                         <img
                             src={currentStep.imageUrl}
                             alt={`Step ${currentIndex + 1}`}
                             style={{
-                                maxHeight: '50vh',
-                                maxWidth: '95%',
+                                maxHeight: '40vh',
+                                maxWidth: '90%',
                                 objectFit: 'contain',
                                 borderRadius: '1.5rem',
                                 boxShadow: '0 12px 40px rgba(0,0,0,0.15)',
-                                border: '6px solid white'
+                                border: '6px solid white',
+                                flexShrink: 0
                             }}
                         />
                     )}
                     <h2 style={{
-                        fontSize: currentStep.imageUrl ? '3rem' : '4.5rem',
+                        fontSize: currentStep.imageUrl ? '2.5rem' : '3.5rem',
                         fontWeight: '800',
-                        lineHeight: '1.2',
+                        lineHeight: '1.25',
                         color: 'var(--text-main)',
                         wordBreak: 'keep-all',
-                        maxWidth: '90%',
-                        margin: '0 auto'
+                        maxWidth: '92%',
+                        margin: '0 auto',
+                        // Small font adjustment if text is extremely long
+                        fontSize: currentStep.text.length > 50
+                            ? (currentStep.imageUrl ? '1.8rem' : '2.5rem')
+                            : (currentStep.imageUrl ? '2.5rem' : '3.5rem')
                     }}>
                         {currentStep.text}
                     </h2>
