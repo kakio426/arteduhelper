@@ -11,7 +11,7 @@ const tourSteps = [
     {
         target: 'api-key-section',
         title: '🔑 API 키 입력',
-        message: 'Gemini API 키를 입력해주세요. "키 발급받기"를 클릭하면 무료로 발급받을 수 있어요!',
+        message: 'Gemini API 키를 입력해주세요. "키 발급받기"를 클릭하면 무료로 발급받을 수 있어요! 개인용으로는 충분히 차고 넘치는 무료 사용량을 제공하니 걱정 마세요!',
         position: 'bottom'
     },
     {

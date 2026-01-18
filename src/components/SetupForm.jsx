@@ -210,7 +210,7 @@ const SetupForm = ({ state, dispatch, onStart }) => {
                     </div>
                     <p style={{ marginTop: '-0.25rem', marginBottom: '1rem', fontSize: '0.85rem', color: 'var(--text-sub)', lineHeight: '1.4' }}>
                         Google AI Studio에서 무료로 API 키를 발급받아 붙여넣어 주세요.<br />
-                        (개인용 키를 사용하면 AI가 자동으로 수업 단계를 생성해줍니다!)
+                        (개인용으로는 차고 넘치는 무료 사용량을 제공하며, AI가 수업 단계를 자동 생성해줍니다! ✨)
                     </p>
                     <input
                         type="password"
