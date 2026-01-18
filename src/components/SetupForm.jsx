@@ -70,6 +70,22 @@ const SetupForm = ({ state, dispatch, onStart }) => {
         reader.readAsDataURL(file);
     };
 
+    const handlePaste = (index, event) => {
+        const items = event.clipboardData?.items;
+        if (!items) return;
+
+        for (let i = 0; i < items.length; i++) {
+            if (items[i].type.indexOf('image') !== -1) {
+                event.preventDefault();
+                const file = items[i].getAsFile();
+                if (file) {
+                    handleImageUpload(index, file);
+                }
+                break;
+            }
+        }
+    };
+
     const handleGenerateSteps = () => {
         if (!transcriptText.trim()) return;
         const steps = cleanTranscript(transcriptText);
@@ -346,7 +362,8 @@ const SetupForm = ({ state, dispatch, onStart }) => {
                                             className="input-field"
                                             value={step.text}
                                             onChange={(e) => handleStepChange(index, e.target.value)}
-                                            placeholder={`단계 ${index + 1} 설명 입력...`}
+                                            onPaste={(e) => handlePaste(index, e)}
+                                            placeholder={`단계 ${index + 1} 설명 입력... (이미지 붙여넣기 가능)`}
                                             rows={2}
                                             style={{ resize: 'none', margin: 0 }}
                                         />
