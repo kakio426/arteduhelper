@@ -61,27 +61,30 @@ const InstructionViewer = ({ steps, interval }) => {
             </div>
 
             {/* Instruction Body */}
-            <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center', padding: '1rem', gap: '1.5rem' }}>
-                <div key={currentIndex} className="fade-in" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1.5rem' }}>
+            <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center', padding: '0.5rem', gap: '1.5rem', width: '100%' }}>
+                <div key={currentIndex} className="fade-in" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '2rem', width: '100%' }}>
                     {currentStep.imageUrl && (
                         <img
                             src={currentStep.imageUrl}
                             alt={`Step ${currentIndex + 1}`}
                             style={{
-                                maxHeight: '35vh',
-                                maxWidth: '80%',
+                                maxHeight: '50vh',
+                                maxWidth: '95%',
                                 objectFit: 'contain',
-                                borderRadius: '1rem',
-                                boxShadow: '0 8px 30px rgba(0,0,0,0.12)'
+                                borderRadius: '1.5rem',
+                                boxShadow: '0 12px 40px rgba(0,0,0,0.15)',
+                                border: '6px solid white'
                             }}
                         />
                     )}
                     <h2 style={{
-                        fontSize: currentStep.imageUrl ? '2rem' : '3rem',
-                        fontWeight: '700',
-                        lineHeight: '1.3',
+                        fontSize: currentStep.imageUrl ? '3rem' : '4.5rem',
+                        fontWeight: '800',
+                        lineHeight: '1.2',
                         color: 'var(--text-main)',
-                        wordBreak: 'keep-all'
+                        wordBreak: 'keep-all',
+                        maxWidth: '90%',
+                        margin: '0 auto'
                     }}>
                         {currentStep.text}
                     </h2>
