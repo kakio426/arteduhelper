@@ -61,10 +61,23 @@ const InstructionViewer = ({ steps, interval }) => {
             </div>
 
             {/* Instruction Body */}
-            <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', textAlign: 'center', padding: '1rem' }}>
-                <div key={currentIndex} className="fade-in">
+            <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center', padding: '1rem', gap: '1.5rem' }}>
+                <div key={currentIndex} className="fade-in" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1.5rem' }}>
+                    {currentStep.imageUrl && (
+                        <img
+                            src={currentStep.imageUrl}
+                            alt={`Step ${currentIndex + 1}`}
+                            style={{
+                                maxHeight: '35vh',
+                                maxWidth: '80%',
+                                objectFit: 'contain',
+                                borderRadius: '1rem',
+                                boxShadow: '0 8px 30px rgba(0,0,0,0.12)'
+                            }}
+                        />
+                    )}
                     <h2 style={{
-                        fontSize: '3rem',
+                        fontSize: currentStep.imageUrl ? '2rem' : '3rem',
                         fontWeight: '700',
                         lineHeight: '1.3',
                         color: 'var(--text-main)',

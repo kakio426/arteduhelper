@@ -1,6 +1,6 @@
 export const initialState = {
     videoUrl: '',
-    steps: [], // { id: number, text: string }
+    steps: [], // { id: number, text: string, imageUrl: string | null }
     stepInterval: 10 // seconds
 };
 
@@ -9,6 +9,7 @@ export const ACTIONS = {
     ADD_STEP: 'ADD_STEP',
     REMOVE_STEP: 'REMOVE_STEP',
     UPDATE_STEP: 'UPDATE_STEP',
+    UPDATE_STEP_IMAGE: 'UPDATE_STEP_IMAGE',
     SET_INTERVAL: 'SET_INTERVAL',
     REPLACE_STEPS: 'REPLACE_STEPS'
 };
@@ -19,13 +20,10 @@ export const classDataReducer = (state, action) => {
             return { ...state, videoUrl: action.payload };
 
         case ACTIONS.ADD_STEP:
-            // Allow empty temporarily while typing? No, ADD usually implies creating a new block.
-            // But we might want to just add an empty block and let user type.
-            // For now, let's keep logic: Add "New Step" or payload.
             const newId = Date.now();
             return {
                 ...state,
-                steps: [...state.steps, { id: newId, text: action.payload || '' }]
+                steps: [...state.steps, { id: newId, text: action.payload || '', imageUrl: null }]
             };
 
         case ACTIONS.REMOVE_STEP:
@@ -45,11 +43,27 @@ export const classDataReducer = (state, action) => {
                 steps: newSteps
             };
 
+        case ACTIONS.UPDATE_STEP_IMAGE:
+            const { index: imgIndex, imageUrl } = action.payload;
+            const stepsWithImage = [...state.steps];
+            if (stepsWithImage[imgIndex]) {
+                stepsWithImage[imgIndex] = { ...stepsWithImage[imgIndex], imageUrl };
+            }
+            return {
+                ...state,
+                steps: stepsWithImage
+            };
+
         case ACTIONS.SET_INTERVAL:
             return { ...state, stepInterval: Math.max(1, parseInt(action.payload) || 10) };
 
         case ACTIONS.REPLACE_STEPS:
-            return { ...state, steps: action.payload };
+            // Ensure all steps have imageUrl property
+            const normalizedSteps = action.payload.map(step => ({
+                ...step,
+                imageUrl: step.imageUrl || null
+            }));
+            return { ...state, steps: normalizedSteps };
 
         default:
             return state;

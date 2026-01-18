@@ -15,7 +15,8 @@ import {
     Clock,
     X,
     FileText,
-    ChevronRight
+    ChevronRight,
+    ImagePlus
 } from 'lucide-react';
 
 const SetupForm = ({ state, dispatch, onStart }) => {
@@ -58,6 +59,15 @@ const SetupForm = ({ state, dispatch, onStart }) => {
 
     const handleRemoveStep = (index) => {
         dispatch({ type: ACTIONS.REMOVE_STEP, payload: index });
+    };
+
+    const handleImageUpload = (index, file) => {
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onloadend = () => {
+            dispatch({ type: ACTIONS.UPDATE_STEP_IMAGE, payload: { index, imageUrl: reader.result } });
+        };
+        reader.readAsDataURL(file);
     };
 
     const handleGenerateSteps = () => {
@@ -237,8 +247,8 @@ const SetupForm = ({ state, dispatch, onStart }) => {
 
                 <div style={{
                     display: videoId ? 'grid' : 'block',
-                    gridTemplateColumns: videoId ? '1fr 1.2fr' : '1fr',
-                    gap: '2.5rem',
+                    gridTemplateColumns: videoId ? '2fr 3fr' : '1fr',
+                    gap: '2rem',
                     alignItems: 'start'
                 }}>
                     {/* Left Side: Video Preview (Mobile handles this with stacked layout) */}
@@ -263,14 +273,14 @@ const SetupForm = ({ state, dispatch, onStart }) => {
 
                     {/* Right Side: Instructions List */}
                     <div style={{ marginBottom: '2rem' }}>
-                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
-                            <h2 style={{ fontSize: '1.5rem', fontWeight: 'bold' }}>수업 단계 설정 (Instructions)</h2>
-                            <div style={{ display: 'flex', gap: '0.75rem' }}>
-                                <button className="btn btn-secondary" onClick={() => setShowImport(!showImport)}>
-                                    {showImport ? <><X size={18} /> 닫기</> : <><FileText size={18} /> 대본 붙여넣기</>}
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem', flexWrap: 'wrap', gap: '1rem' }}>
+                            <h2 style={{ fontSize: '1.25rem', fontWeight: 'bold', margin: 0 }}>수업 단계 설정</h2>
+                            <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
+                                <button className="btn btn-secondary" onClick={() => setShowImport(!showImport)} style={{ whiteSpace: 'nowrap' }}>
+                                    {showImport ? <><X size={16} /> 닫기</> : <><FileText size={16} /> 대본</>}
                                 </button>
-                                <button className="btn btn-primary" onClick={handleAddStep}>
-                                    <Plus size={18} /> 단계 추가
+                                <button className="btn btn-primary" onClick={handleAddStep} style={{ whiteSpace: 'nowrap' }}>
+                                    <Plus size={16} /> 추가
                                 </button>
                             </div>
                         </div>
@@ -305,13 +315,21 @@ const SetupForm = ({ state, dispatch, onStart }) => {
                             </div>
                         )}
 
-                        <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
                             {state.steps.map((step, index) => (
-                                <div key={step.id} style={{ display: 'flex', gap: '1rem', alignItems: 'flex-start' }}>
+                                <div key={step.id} style={{
+                                    display: 'flex',
+                                    gap: '0.75rem',
+                                    alignItems: 'flex-start',
+                                    background: 'white',
+                                    padding: '1rem',
+                                    borderRadius: '1rem',
+                                    boxShadow: '0 2px 8px rgba(0,0,0,0.05)'
+                                }}>
                                     <div style={{
                                         flexShrink: 0,
-                                        width: '2.5rem',
-                                        height: '2.5rem',
+                                        width: '2rem',
+                                        height: '2rem',
                                         background: 'var(--accent-blue)',
                                         color: 'white',
                                         borderRadius: '50%',
@@ -319,24 +337,62 @@ const SetupForm = ({ state, dispatch, onStart }) => {
                                         alignItems: 'center',
                                         justifyContent: 'center',
                                         fontWeight: '700',
-                                        marginTop: '0.5rem'
+                                        fontSize: '0.85rem'
                                     }}>
                                         {index + 1}
                                     </div>
-                                    <textarea
-                                        className="input-field"
-                                        value={step.text}
-                                        onChange={(e) => handleStepChange(index, e.target.value)}
-                                        placeholder={`단계 ${index + 1} 설명 입력...`}
-                                        rows={2}
-                                        style={{ resize: 'none' }}
-                                    />
+                                    <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+                                        <textarea
+                                            className="input-field"
+                                            value={step.text}
+                                            onChange={(e) => handleStepChange(index, e.target.value)}
+                                            placeholder={`단계 ${index + 1} 설명 입력...`}
+                                            rows={2}
+                                            style={{ resize: 'none', margin: 0 }}
+                                        />
+                                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                                            <label style={{
+                                                display: 'inline-flex',
+                                                alignItems: 'center',
+                                                gap: '0.25rem',
+                                                padding: '0.5rem 0.75rem',
+                                                background: step.imageUrl ? '#E0F2FE' : '#F1F5F9',
+                                                borderRadius: '0.5rem',
+                                                cursor: 'pointer',
+                                                fontSize: '0.8rem',
+                                                color: step.imageUrl ? 'var(--accent-blue)' : '#64748B',
+                                                transition: 'all 0.2s'
+                                            }}>
+                                                <ImagePlus size={14} />
+                                                {step.imageUrl ? '이미지 변경' : '이미지 추가'}
+                                                <input
+                                                    type="file"
+                                                    accept="image/*"
+                                                    onChange={(e) => handleImageUpload(index, e.target.files[0])}
+                                                    style={{ display: 'none' }}
+                                                />
+                                            </label>
+                                            {step.imageUrl && (
+                                                <img
+                                                    src={step.imageUrl}
+                                                    alt={`Step ${index + 1}`}
+                                                    style={{
+                                                        height: '40px',
+                                                        width: '60px',
+                                                        objectFit: 'cover',
+                                                        borderRadius: '0.25rem',
+                                                        border: '1px solid #E2E8F0'
+                                                    }}
+                                                />
+                                            )}
+                                        </div>
+                                    </div>
                                     <button
                                         className="btn btn-danger"
                                         onClick={() => handleRemoveStep(index)}
-                                        style={{ padding: '1rem', marginTop: '0.5rem' }}
+                                        style={{ padding: '0.5rem', flexShrink: 0 }}
                                     >
-                                        <Trash2 size={20} />
+                                        <Trash2 size={16} />
                                     </button>
                                 </div>
                             ))}
