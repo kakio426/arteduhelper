@@ -1,12 +1,14 @@
 import React, { useRef } from 'react';
 import YouTube from 'react-youtube';
 
-const VideoLooper = ({ videoId }) => {
+const VideoLooper = ({ videoId, autoPlay = true }) => {
     const playerRef = useRef(null);
 
     const onPlayerReady = (event) => {
         playerRef.current = event.target;
-        event.target.playVideo();
+        if (autoPlay) {
+            event.target.playVideo();
+        }
     };
 
     const handleVideoEnd = (event) => {
@@ -18,7 +20,7 @@ const VideoLooper = ({ videoId }) => {
         height: '100%',
         width: '100%',
         playerVars: {
-            autoplay: 1,
+            autoplay: autoPlay ? 1 : 0,
             controls: 1, // Show controls so clicking play/pause is possible manually if needed
             rel: 0, // No related videos
         },

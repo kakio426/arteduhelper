@@ -4,7 +4,7 @@ import { extractVideoId, getVideoInfo } from '../utils/youtubeParser';
 import { cleanTranscript } from '../utils/transcriptParser';
 import { generateStepsWithAI } from '../utils/aiService';
 import VideoLooper from './VideoLooper';
-import TutorialModal from './TutorialModal';
+import DemoTourOverlay from './DemoTourOverlay';
 import { MOCK_CLASS_DATA } from '../data/mockData';
 import {
     Sparkles,
@@ -28,7 +28,7 @@ const SetupForm = ({ state, dispatch, onStart }) => {
     const [apiKey, setApiKey] = useState(localStorage.getItem('gemini_api_key') || '');
     const [isGenerating, setIsGenerating] = useState(false);
     const [aiError, setAiError] = useState('');
-    const [showTutorial, setShowTutorial] = useState(false);
+    const [tourStep, setTourStep] = useState(-1); // -1 = tour not active
 
     // Extract video ID for preview
     const videoId = extractVideoId(state.videoUrl);
@@ -105,8 +105,8 @@ const SetupForm = ({ state, dispatch, onStart }) => {
         dispatch({ type: ACTIONS.SET_INTERVAL, payload: MOCK_CLASS_DATA.stepInterval });
         dispatch({ type: ACTIONS.REPLACE_STEPS, payload: MOCK_CLASS_DATA.steps });
 
-        // Show tutorial modal
-        setShowTutorial(true);
+        // Start interactive tour
+        setTourStep(0);
     };
 
     const handleAIGenerate = async () => {
@@ -180,7 +180,7 @@ const SetupForm = ({ state, dispatch, onStart }) => {
                 </div>
 
                 {/* API Key Section */}
-                <div style={{
+                <div id="api-key-section" style={{
                     marginBottom: '2.5rem',
                     padding: '1.5rem',
                     background: 'rgba(56, 189, 248, 0.05)',
@@ -221,7 +221,7 @@ const SetupForm = ({ state, dispatch, onStart }) => {
                     />
                 </div>
 
-                <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '2rem', marginBottom: '2.5rem' }}>
+                <div id="youtube-url-section" style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '2rem', marginBottom: '2.5rem' }}>
                     <div>
                         <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.75rem', fontWeight: '700' }}>
                             <Video size={18} color="var(--accent-blue)" /> YouTube Video URL
@@ -250,7 +250,7 @@ const SetupForm = ({ state, dispatch, onStart }) => {
                     </div>
                 </div>
 
-                <div style={{ textAlign: 'center', marginBottom: '2.5rem' }}>
+                <div id="ai-generate-btn" style={{ textAlign: 'center', marginBottom: '2.5rem' }}>
                     <button
                         className="btn btn-primary"
                         onClick={handleAIGenerate}
@@ -263,7 +263,7 @@ const SetupForm = ({ state, dispatch, onStart }) => {
                 </div>
 
                 {/* AI Guide Section */}
-                <div style={{
+                <div id="tips-section" style={{
                     marginBottom: '3rem',
                     padding: '1.5rem',
                     borderRadius: '1.5rem',
@@ -310,7 +310,7 @@ const SetupForm = ({ state, dispatch, onStart }) => {
                             border: '4px solid white'
                         }}>
                             <div style={{ aspectRatio: '16/9', background: '#000' }}>
-                                <VideoLooper videoId={videoId} />
+                                <VideoLooper videoId={videoId} autoPlay={false} />
                             </div>
                             <div style={{ padding: '1rem', background: 'white', fontSize: '0.85rem', color: 'var(--text-sub)', textAlign: 'center' }}>
                                 📺 영상을 보며 아래 단계를 직접 수정할 수 있습니다.
@@ -319,7 +319,7 @@ const SetupForm = ({ state, dispatch, onStart }) => {
                     )}
 
                     {/* Right Side: Instructions List */}
-                    <div style={{ marginBottom: '2rem' }}>
+                    <div id="steps-section" style={{ marginBottom: '2rem' }}>
                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem', flexWrap: 'wrap', gap: '1rem' }}>
                             <h2 style={{ fontSize: '1.25rem', fontWeight: 'bold', margin: 0 }}>수업 단계 설정</h2>
                             <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
@@ -450,13 +450,14 @@ const SetupForm = ({ state, dispatch, onStart }) => {
 
                 <div style={{ textAlign: 'center', marginTop: '4rem', paddingBottom: '2rem' }}>
                     <button
+                        id="start-btn"
                         className="btn btn-primary"
                         style={{
-                            fontSize: '1.25rem',
-                            padding: '1.25rem 4rem',
-                            background: 'var(--accent-pink)',
-                            opacity: isValid ? 1 : 0.5,
-                            cursor: isValid ? 'pointer' : 'not-allowed'
+                            fontSize: '1.3rem',
+                            padding: '1rem 3rem',
+                            borderRadius: '2rem',
+                            background: 'linear-gradient(135deg, #FF6B9D 0%, #FF8E53 100%)',
+                            boxShadow: '0 10px 30px rgba(255, 107, 157, 0.4)'
                         }}
                         disabled={!isValid}
                         onClick={onStart}
@@ -466,11 +467,15 @@ const SetupForm = ({ state, dispatch, onStart }) => {
                 </div>
             </div>
 
-            {/* Tutorial Modal */}
-            <TutorialModal
-                isOpen={showTutorial}
-                onClose={() => setShowTutorial(false)}
-            />
+            {/* Demo Tour Overlay */}
+            {tourStep >= 0 && (
+                <DemoTourOverlay
+                    currentStep={tourStep}
+                    onNext={() => setTourStep(prev => prev + 1)}
+                    onClose={() => setTourStep(-1)}
+                    onComplete={() => setTourStep(-1)}
+                />
+            )}
         </div>
     );
 };

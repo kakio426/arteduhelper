@@ -20,12 +20,19 @@ const ClassRoom = ({ state, onBack }) => {
         }
     };
 
+    const handleBack = () => {
+        if (document.fullscreenElement) {
+            document.exitFullscreen().catch(err => console.error(err));
+        }
+        onBack();
+    };
+
     return (
         <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', background: 'var(--bg-color)' }}>
             {/* Nav Header */}
             <header>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-                    <button className="btn btn-secondary" onClick={onBack} style={{ padding: '0.5rem 1rem' }}>
+                    <button className="btn btn-secondary" onClick={handleBack} style={{ padding: '0.5rem 1rem' }}>
                         <ChevronLeft size={18} /> 나가기
                     </button>
                     <h1 style={{ fontSize: '1.25rem', fontWeight: 'bold' }}>미술 수업 진행 중...</h1>
