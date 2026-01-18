@@ -25,6 +25,9 @@ const SetupForm = ({ state, dispatch, onStart }) => {
     const [isGenerating, setIsGenerating] = useState(false);
     const [aiError, setAiError] = useState('');
 
+    // Extract video ID for preview
+    const videoId = extractVideoId(state.videoUrl);
+
     useEffect(() => {
         localStorage.setItem('gemini_api_key', apiKey);
     }, [apiKey]);
