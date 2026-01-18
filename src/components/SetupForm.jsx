@@ -159,9 +159,27 @@ const SetupForm = ({ state, dispatch, onStart }) => {
                     <h1 style={{ fontSize: '2.5rem', fontWeight: 'bold', color: 'var(--text-main)', letterSpacing: '-1px' }}>
                         Art Class Loop Assistant
                     </h1>
-                    <p style={{ color: 'var(--text-sub)', fontSize: '1.1rem' }}>
+                    <p style={{ color: 'var(--text-sub)', fontSize: '1.1rem', marginBottom: '1.5rem' }}>
                         선생님을 위한 스마트 미술 수업 도우미
                     </p>
+                    <button
+                        onClick={handleDemoMode}
+                        className="btn btn-secondary"
+                        style={{
+                            padding: '0.6rem 1.2rem',
+                            borderRadius: '2rem',
+                            fontSize: '0.95rem',
+                            fontWeight: '700',
+                            display: 'inline-flex',
+                            alignItems: 'center',
+                            gap: '0.5rem',
+                            border: '2px solid var(--accent-blue)',
+                            color: 'var(--accent-blue)',
+                            background: 'white'
+                        }}
+                    >
+                        <Sparkles size={16} /> 기능 체험해보기
+                    </button>
                 </div>
 
                 {/* API Key Section */}
