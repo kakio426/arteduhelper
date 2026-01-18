@@ -51,16 +51,41 @@ const DemoTourOverlay = ({ currentStep, onNext, onClose, onComplete }) => {
     const step = tourSteps[currentStep];
 
     useEffect(() => {
+        const updateRect = () => {
+            if (step?.target) {
+                const element = document.getElementById(step.target);
+                if (element) {
+                    const rect = element.getBoundingClientRect();
+                    setTargetRect(rect);
+                }
+            } else {
+                setTargetRect(null);
+            }
+        };
+
+        // Initial update
+        updateRect();
+
         if (step?.target) {
             const element = document.getElementById(step.target);
             if (element) {
-                const rect = element.getBoundingClientRect();
-                setTargetRect(rect);
-                // Scroll element into view
                 element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                // Recalculate multiple times during and after the smooth scroll
+                const timer1 = setTimeout(updateRect, 100);
+                const timer2 = setTimeout(updateRect, 300);
+                const timer3 = setTimeout(updateRect, 600);
+
+                window.addEventListener('scroll', updateRect, true);
+                window.addEventListener('resize', updateRect);
+
+                return () => {
+                    clearTimeout(timer1);
+                    clearTimeout(timer2);
+                    clearTimeout(timer3);
+                    window.removeEventListener('scroll', updateRect, true);
+                    window.removeEventListener('resize', updateRect);
+                };
             }
-        } else {
-            setTargetRect(null);
         }
     }, [currentStep, step?.target]);
 
@@ -74,24 +99,47 @@ const DemoTourOverlay = ({ currentStep, onNext, onClose, onComplete }) => {
             return {
                 top: '50%',
                 left: '50%',
-                transform: 'translate(-50%, -50%)'
+                transform: 'translate(-50%, -50%)',
+                width: '90%',
+                maxWidth: '400px'
             };
         }
 
         const padding = 20;
+        let top, left, transform;
+
+        left = targetRect.left + targetRect.width / 2;
+        // Clamp left to prevent going off-screen horizontally
+        const boxWidth = 400; // Expected max width
+        const minLeft = boxWidth / 2 + 10;
+        const maxLeft = window.innerWidth - (boxWidth / 2 + 10);
+        left = Math.max(minLeft, Math.min(maxLeft, left));
+
         if (step.position === 'bottom') {
-            return {
-                top: `${targetRect.bottom + padding}px`,
-                left: `${targetRect.left + targetRect.width / 2}px`,
-                transform: 'translateX(-50%)'
-            };
+            top = targetRect.bottom + padding;
+            transform = 'translateX(-50%)';
+            // If bottom doesn't fit, try top
+            if (top + 200 > window.innerHeight) {
+                top = targetRect.top - padding;
+                transform = 'translate(-50%, -100%)';
+            }
         } else {
-            return {
-                top: `${targetRect.top - padding}px`,
-                left: `${targetRect.left + targetRect.width / 2}px`,
-                transform: 'translate(-50%, -100%)'
-            };
+            top = targetRect.top - padding;
+            transform = 'translate(-50%, -100%)';
+            // If top doesn't fit, try bottom
+            if (top - 200 < 0) {
+                top = targetRect.bottom + padding;
+                transform = 'translateX(-50%)';
+            }
         }
+
+        return {
+            top: `${top}px`,
+            left: `${left}px`,
+            transform: transform,
+            width: '90%',
+            maxWidth: '400px'
+        };
     };
 
     return (
@@ -139,7 +187,8 @@ const DemoTourOverlay = ({ currentStep, onNext, onClose, onComplete }) => {
                     border: '3px solid var(--accent-blue)',
                     borderRadius: '16px',
                     boxShadow: '0 0 30px rgba(56, 189, 248, 0.5)',
-                    pointerEvents: 'none'
+                    pointerEvents: 'none',
+                    transition: 'all 0.3s ease-out'
                 }} />
             )}
 
@@ -150,9 +199,9 @@ const DemoTourOverlay = ({ currentStep, onNext, onClose, onComplete }) => {
                 background: 'white',
                 borderRadius: '1.5rem',
                 padding: '2rem',
-                maxWidth: '400px',
                 boxShadow: '0 25px 50px rgba(0, 0, 0, 0.3)',
-                animation: 'fadeIn 0.3s ease'
+                animation: 'fadeIn 0.3s ease',
+                transition: 'all 0.3s ease-out'
             }}>
                 {/* Close button */}
                 <button
