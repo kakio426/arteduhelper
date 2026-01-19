@@ -1,30 +1,26 @@
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Dongle:wght@300;400;700&family=Gaegu:wght@400;700&display=swap');
 
 :root {
-  /* Dreamy Sketchbook Theme Palette */
-  --bg-color: #FEFCE8;
-  /* bg-yellow-50 */
-  --card-bg: #FFFFFF;
-  --accent-blue: #38BDF8;
-  /* sky-400 */
-  --accent-blue-hover: #0EA5E9;
-  /* sky-500 */
-  --accent-pink: #F472B6;
-  /* pink-400 */
-  --accent-pink-hover: #EC4899;
-  /* pink-500 */
-  --text-main: #1E293B;
-  /* slate-800 */
-  --text-sub: #64748B;
-  /* slate-500 */
-  --border-dashed: #7DD3FC;
-  /* sky-300 */
-  --highlight: #FEF08A;
-  /* yellow-200 */
+  /* Claymorphism Theme Palette */
+  --bg-soft: #E0E5EC;
+  --clay-text: #4A5568;
+  --clay-accent: #9D50BB;
+  --clay-green: #48c6ef;
+  --clay-blue: #38BDF8;
+  --clay-pink: #F472B6;
 
-  --font-main: 'Outfit', 'Segoe UI', system-ui, sans-serif;
+  /* Font Families */
+  --font-round: 'Dongle', sans-serif;
+  --font-hand: 'Gaegu', cursive;
 
-  --shadow-sketch: 0 8px 30px rgba(0, 0, 0, 0.04);
+  /* Clay Shadows */
+  --shadow-clay: 9px 9px 16px rgb(163, 177, 198, 0.6), -9px -9px 16px rgba(255, 255, 255, 0.5);
+  --shadow-clay-inner: inset 6px 6px 10px 0 rgba(163, 177, 198, 0.7), inset -6px -6px 10px 0 rgba(255, 255, 255, 0.8);
+  --shadow-clay-hover: 12px 12px 20px rgb(163, 177, 198, 0.7), -12px -12px 20px rgba(255, 255, 255, 0.6);
+  --shadow-clay-pressed: inset 4px 4px 8px 0 rgba(163, 177, 198, 0.7), inset -4px -4px 8px 0 rgba(255, 255, 255, 0.8);
+
+  /* Border Radius */
+  --radius-clay: 30px;
 }
 
 * {
@@ -34,11 +30,13 @@
 body {
   margin: 0;
   padding: 0;
-  font-family: var(--font-main);
-  background-color: var(--bg-color);
-  color: var(--text-main);
+  font-family: var(--font-round);
+  background-color: var(--bg-soft);
+  color: var(--clay-text);
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
+  font-size: 1.5rem;
+  letter-spacing: 0.025em;
 }
 
 .container {
@@ -48,108 +46,122 @@ body {
   padding: 1rem;
 }
 
-/* Sketch Card Style */
+/* Clay Card Style */
 .card {
-  background: var(--card-bg);
-  border: 2px dashed var(--border-dashed);
-  border-radius: 2rem;
+  background: var(--bg-soft);
+  border-radius: var(--radius-clay);
   padding: 2.5rem;
-  box-shadow: var(--shadow-sketch);
-  transition: transform 0.3s ease;
+  box-shadow: var(--shadow-clay);
+  transition: all 0.3s ease;
+}
+
+.card:hover {
+  box-shadow: var(--shadow-clay-hover);
 }
 
 /* Buttons */
 .btn {
   padding: 0.75rem 1.5rem;
-  border-radius: 9999px;
+  border-radius: var(--radius-clay);
   border: none;
   font-weight: 700;
   cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  transition: all 0.2s ease;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
+  background-color: var(--bg-soft);
+  box-shadow: var(--shadow-clay);
+  font-family: var(--font-round);
+  font-size: 1.5rem;
 }
 
 .btn:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--shadow-clay-hover);
+  transform: translateY(-2px);
 }
 
 .btn:active {
-  transform: translateY(0);
+  box-shadow: var(--shadow-clay-pressed);
+  transform: scale(0.98);
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
 .btn-primary {
-  background-color: var(--accent-blue);
-  color: white;
+  color: var(--clay-accent);
 }
 
 .btn-primary:hover {
-  background-color: var(--accent-blue-hover);
+  color: #7C3AED;
 }
 
 .btn-secondary {
-  background-color: transparent;
-  border: 2px solid var(--accent-blue);
-  color: var(--accent-blue);
+  color: var(--clay-text);
 }
 
 .btn-danger {
-  background-color: #FEE2E2;
+  background-color: var(--bg-soft);
   color: #EF4444;
 }
 
 .btn-danger:hover {
-  background-color: #FECACA;
+  color: #DC2626;
 }
 
 /* Inputs */
 .input-field {
   width: 100%;
   padding: 1rem 1.25rem;
-  border: 2px solid #F1F5F9;
+  border: none;
   border-radius: 1rem;
-  background-color: #F8FAFC;
-  font-family: inherit;
-  font-size: 1rem;
+  background-color: var(--bg-soft);
+  box-shadow: var(--shadow-clay-inner);
+  font-family: var(--font-hand);
+  font-size: 1.25rem;
   transition: all 0.2s ease;
   outline: none;
+  color: var(--clay-text);
 }
 
 .input-field:focus {
-  border-color: var(--accent-blue);
-  background-color: white;
-  box-shadow: 0 0 0 4px rgba(56, 189, 248, 0.1);
+  box-shadow: var(--shadow-clay-inner), 0 0 0 4px rgba(157, 80, 187, 0.1);
+}
+
+.input-field::placeholder {
+  color: #94A3B8;
 }
 
 /* Progress Bar */
 .progress-container {
   width: 100%;
   height: 12px;
-  background-color: #FCE7F3;
-  /* pink-100 */
+  background-color: var(--bg-soft);
+  box-shadow: var(--shadow-clay-inner);
   border-radius: 999px;
   overflow: hidden;
 }
 
 .progress-bar {
   height: 100%;
-  background-color: var(--accent-pink);
+  background: linear-gradient(90deg, var(--clay-accent) 0%, var(--clay-green) 100%);
   border-radius: 999px;
   transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* Header */
 header {
-  background-color: white;
+  background-color: var(--bg-soft);
   height: 70px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 0 2rem;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  box-shadow: var(--shadow-clay);
   position: sticky;
   top: 0;
   z-index: 100;
@@ -159,12 +171,19 @@ h1,
 h2,
 h3 {
   margin: 0;
+  font-family: var(--font-round);
+  color: var(--clay-text);
+}
+
+.text-shadow {
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .highlight-bg {
-  background-color: var(--highlight);
-  padding: 0 0.5rem;
-  border-radius: 0.5rem;
+  background-color: rgba(157, 80, 187, 0.1);
+  padding: 0.25rem 0.75rem;
+  border-radius: 1rem;
+  box-shadow: var(--shadow-clay-inner);
 }
 
 .spinner {
@@ -182,6 +201,24 @@ h3 {
   }
 }
 
+.floating {
+  animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-10px);
+  }
+
+  100% {
+    transform: translateY(0px);
+  }
+}
+
 .fade-in {
   animation: fadeIn 0.5s ease-out;
 }
@@ -196,4 +233,10 @@ h3 {
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+/* Textarea specific */
+textarea.input-field {
+  resize: vertical;
+  font-family: var(--font-hand);
 }

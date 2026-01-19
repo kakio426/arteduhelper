@@ -150,65 +150,77 @@ const SetupForm = ({ state, dispatch, onStart }) => {
         <div className="container" style={{ maxWidth: '900px', padding: '2rem 1rem' }}>
             <div className="card">
                 <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
-                    <div style={{ display: 'inline-flex', padding: '1rem', background: '#F0F9FF', borderRadius: '1.5rem', marginBottom: '1rem' }}>
-                        <Sparkles size={40} color="var(--accent-blue)" />
+                    <div className="floating" style={{
+                        display: 'inline-flex',
+                        padding: '1.5rem',
+                        background: 'var(--bg-soft)',
+                        borderRadius: '2rem',
+                        marginBottom: '1.5rem',
+                        boxShadow: 'var(--shadow-clay-inner)'
+                    }}>
+                        <Sparkles size={50} color="var(--clay-accent)" />
                     </div>
-                    <h1 style={{ fontSize: '2.5rem', fontWeight: 'bold', color: 'var(--text-main)', letterSpacing: '-1px' }}>
-                        Art Class Loop Assistant
+                    <h1 style={{
+                        fontSize: '4.5rem',
+                        fontWeight: 'bold',
+                        color: 'var(--clay-text)',
+                        fontFamily: 'var(--font-round)',
+                        lineHeight: '1.1',
+                        marginBottom: '0.5rem'
+                    }}>
+                        몽글몽글 미술 수업
                     </h1>
-                    <p style={{ color: 'var(--text-sub)', fontSize: '1.1rem', marginBottom: '1.5rem' }}>
-                        선생님을 위한 스마트 미술 수업 도우미
+                    <p style={{
+                        color: '#64748B',
+                        fontSize: '2rem',
+                        marginBottom: '1.5rem',
+                        fontFamily: 'var(--font-hand)',
+                        lineHeight: '1.4'
+                    }}>
+                        선생님을 위한 말랑말랑 수업 도우미 ✨
                     </p>
                     <button
                         onClick={handleDemoMode}
                         className="btn btn-secondary"
                         style={{
-                            padding: '0.6rem 1.2rem',
-                            borderRadius: '2rem',
-                            fontSize: '0.95rem',
-                            fontWeight: '700',
-                            display: 'inline-flex',
-                            alignItems: 'center',
-                            gap: '0.5rem',
-                            border: '2px solid var(--accent-blue)',
-                            color: 'var(--accent-blue)',
-                            background: 'white'
+                            fontSize: '1.25rem'
                         }}
                     >
-                        <Sparkles size={16} /> 기능 체험해보기
+                        <Sparkles size={18} /> 기능 체험해보기
                     </button>
                 </div>
 
                 {/* API Key Section */}
                 <div id="api-key-section" style={{
                     marginBottom: '2.5rem',
-                    padding: '1.5rem',
-                    background: 'rgba(56, 189, 248, 0.05)',
-                    borderRadius: '1.5rem',
-                    border: '1px solid rgba(56, 189, 248, 0.1)'
+                    padding: '2rem',
+                    background: 'var(--bg-soft)',
+                    borderRadius: 'var(--radius-clay)',
+                    boxShadow: 'var(--shadow-clay)',
+                    border: 'none'
                 }}>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.75rem' }}>
-                        <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontWeight: '700', fontSize: '0.95rem' }}>
-                            <Info size={18} color="var(--accent-blue)" /> Gemini API Key
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
+                        <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontWeight: '700', fontSize: '1.5rem' }}>
+                            <Info size={22} color="var(--clay-accent)" /> Gemini API Key
                         </label>
                         <a
                             href="https://aistudio.google.com/app/apikey"
                             target="_blank"
                             rel="noopener noreferrer"
                             style={{
-                                fontSize: '0.85rem',
-                                color: 'var(--accent-blue)',
+                                fontSize: '1.25rem',
+                                color: 'var(--clay-accent)',
                                 textDecoration: 'none',
                                 display: 'flex',
                                 alignItems: 'center',
-                                gap: '0.2rem',
+                                gap: '0.3rem',
                                 fontWeight: 'bold'
                             }}
                         >
-                            키 발급받기 <ChevronRight size={14} />
+                            키 발급받기 <ChevronRight size={18} />
                         </a>
                     </div>
-                    <p style={{ marginTop: '-0.25rem', marginBottom: '1rem', fontSize: '0.85rem', color: 'var(--text-sub)', lineHeight: '1.4' }}>
+                    <p style={{ marginTop: '0', marginBottom: '1.5rem', fontSize: '1.25rem', color: '#64748B', lineHeight: '1.6', fontFamily: 'var(--font-hand)' }}>
                         Google AI Studio에서 무료로 API 키를 발급받아 붙여넣어 주세요.<br />
                         (개인용으로는 차고 넘치는 무료 사용량을 제공하며, AI가 수업 단계를 자동 생성해줍니다! ✨)
                     </p>
@@ -223,8 +235,8 @@ const SetupForm = ({ state, dispatch, onStart }) => {
 
                 <div id="youtube-url-section" style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '2rem', marginBottom: '2.5rem' }}>
                     <div>
-                        <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.75rem', fontWeight: '700' }}>
-                            <Video size={18} color="var(--accent-blue)" /> YouTube Video URL
+                        <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '1rem', fontWeight: '700', fontSize: '1.5rem' }}>
+                            <Video size={22} color="var(--clay-blue)" /> YouTube Video URL
                         </label>
                         <input
                             type="text"
@@ -233,12 +245,12 @@ const SetupForm = ({ state, dispatch, onStart }) => {
                             value={state.videoUrl}
                             onChange={handleUrlChange}
                         />
-                        {urlError && <p style={{ color: '#EF4444', marginTop: '0.5rem', fontSize: '0.9rem', fontWeight: '700' }}>{urlError}</p>}
+                        {urlError && <p style={{ color: '#EF4444', marginTop: '0.75rem', fontSize: '1.25rem', fontWeight: '700', fontFamily: 'var(--font-hand)' }}>{urlError}</p>}
                     </div>
 
                     <div>
-                        <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.75rem', fontWeight: '700' }}>
-                            <Clock size={18} color="var(--accent-blue)" /> 슬라이드 간격 (초)
+                        <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '1rem', fontWeight: '700', fontSize: '1.5rem' }}>
+                            <Clock size={22} color="var(--clay-blue)" /> 슬라이드 간격 (초)
                         </label>
                         <input
                             type="number"
@@ -255,36 +267,36 @@ const SetupForm = ({ state, dispatch, onStart }) => {
                         className="btn btn-primary"
                         onClick={handleAIGenerate}
                         disabled={isGenerating}
-                        style={{ width: '100%', maxWidth: '400px', height: '60px', fontSize: '1.1rem' }}
+                        style={{ width: '100%', maxWidth: '450px', height: '70px', fontSize: '1.75rem' }}
                     >
-                        {isGenerating ? <div className="spinner"></div> : <><Sparkles size={20} /> AI로 수업 단계 자동 생성</>}
+                        {isGenerating ? <div className="spinner"></div> : <><Sparkles size={24} /> AI로 수업 단계 자동 생성</>}
                     </button>
-                    {aiError && <p style={{ color: '#EF4444', marginTop: '1rem', fontWeight: '700' }}>{aiError}</p>}
+                    {aiError && <p style={{ color: '#EF4444', marginTop: '1rem', fontWeight: '700', fontSize: '1.25rem', fontFamily: 'var(--font-hand)' }}>{aiError}</p>}
                 </div>
 
                 {/* AI Guide Section */}
                 <div id="tips-section" style={{
                     marginBottom: '3rem',
-                    padding: '1.5rem',
-                    borderRadius: '1.5rem',
-                    background: 'var(--bg-color)',
-                    borderLeft: '6px solid var(--accent-blue)',
-                    fontSize: '0.95rem'
+                    padding: '2rem',
+                    borderRadius: 'var(--radius-clay)',
+                    background: 'var(--bg-soft)',
+                    boxShadow: 'var(--shadow-clay)',
+                    fontSize: '1.25rem'
                 }}>
-                    <h3 style={{ marginTop: 0, marginBottom: '1rem', color: 'var(--accent-blue)', fontSize: '1.1rem', fontWeight: '700' }}>
+                    <h3 style={{ marginTop: 0, marginBottom: '1.5rem', color: 'var(--clay-accent)', fontSize: '2rem', fontWeight: '700' }}>
                         💡 수업 준비 팁
                     </h3>
                     <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '2rem' }}>
                         <div>
-                            <strong style={{ color: '#059669', display: 'block', marginBottom: '0.5rem' }}>✨ AI가 잘 분석해요</strong>
-                            <ul style={{ margin: 0, padding: '0 0 0 1.25rem', color: 'var(--text-sub)' }}>
+                            <strong style={{ color: '#059669', display: 'block', marginBottom: '0.75rem', fontSize: '1.5rem' }}>✨ AI가 잘 분석해요</strong>
+                            <ul style={{ margin: 0, padding: '0 0 0 1.5rem', color: '#64748B', fontFamily: 'var(--font-hand)' }}>
                                 <li>선생님이 직접 설명하는 영상</li>
                                 <li>정확한 자막이나 수업 안내가 있는 영상</li>
                             </ul>
                         </div>
                         <div>
-                            <strong style={{ color: '#D97706', display: 'block', marginBottom: '0.5rem' }}>✏️ 직접 입력이 필요해요</strong>
-                            <ul style={{ margin: 0, padding: '0 0 0 1.25rem', color: 'var(--text-sub)' }}>
+                            <strong style={{ color: '#D97706', display: 'block', marginBottom: '0.75rem', fontSize: '1.5rem' }}>✏️ 직접 입력이 필요해요</strong>
+                            <ul style={{ margin: 0, padding: '0 0 0 1.5rem', color: '#64748B', fontFamily: 'var(--font-hand)' }}>
                                 <li>설명 없이 배경음악만 있는 영상</li>
                                 <li>AI 결과가 정확하지 않을 때</li>
                             </ul>
@@ -304,15 +316,15 @@ const SetupForm = ({ state, dispatch, onStart }) => {
                             position: 'sticky',
                             top: '100px',
                             zIndex: 10,
-                            borderRadius: '1.5rem',
+                            borderRadius: 'var(--radius-clay)',
                             overflow: 'hidden',
-                            boxShadow: '0 10px 30px rgba(0,0,0,0.1)',
-                            border: '4px solid white'
+                            boxShadow: 'var(--shadow-clay)',
+                            border: 'none'
                         }}>
                             <div style={{ aspectRatio: '16/9', background: '#000' }}>
                                 <VideoLooper videoId={videoId} autoPlay={false} />
                             </div>
-                            <div style={{ padding: '1rem', background: 'white', fontSize: '0.85rem', color: 'var(--text-sub)', textAlign: 'center' }}>
+                            <div style={{ padding: '1.25rem', background: 'var(--bg-soft)', fontSize: '1.25rem', color: '#64748B', textAlign: 'center', fontFamily: 'var(--font-hand)' }}>
                                 📺 영상을 보며 아래 단계를 직접 수정할 수 있습니다.
                             </div>
                         </div>
@@ -320,21 +332,21 @@ const SetupForm = ({ state, dispatch, onStart }) => {
 
                     {/* Right Side: Instructions List */}
                     <div id="steps-section" style={{ marginBottom: '2rem' }}>
-                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem', flexWrap: 'wrap', gap: '1rem' }}>
-                            <h2 style={{ fontSize: '1.25rem', fontWeight: 'bold', margin: 0 }}>수업 단계 설정</h2>
-                            <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
-                                <button className="btn btn-secondary" onClick={() => setShowImport(!showImport)} style={{ whiteSpace: 'nowrap' }}>
-                                    {showImport ? <><X size={16} /> 닫기</> : <><FileText size={16} /> 대본</>}
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem', flexWrap: 'wrap', gap: '1rem' }}>
+                            <h2 style={{ fontSize: '2.5rem', fontWeight: 'bold', margin: 0 }}>수업 단계 설정</h2>
+                            <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
+                                <button className="btn btn-secondary" onClick={() => setShowImport(!showImport)} style={{ whiteSpace: 'nowrap', fontSize: '1.25rem' }}>
+                                    {showImport ? <><X size={18} /> 닫기</> : <><FileText size={18} /> 대본</>}
                                 </button>
-                                <button className="btn btn-primary" onClick={handleAddStep} style={{ whiteSpace: 'nowrap' }}>
-                                    <Plus size={16} /> 추가
+                                <button className="btn btn-primary" onClick={handleAddStep} style={{ whiteSpace: 'nowrap', fontSize: '1.25rem' }}>
+                                    <Plus size={18} /> 추가
                                 </button>
                             </div>
                         </div>
 
                         {showImport && (
-                            <div style={{ marginBottom: '2rem', padding: '1.5rem', background: 'white', borderRadius: '1.5rem', border: '2px dashed var(--accent-blue)' }}>
-                                <p style={{ marginTop: 0, marginBottom: '1rem', fontSize: '0.95rem', color: 'var(--text-sub)' }}>
+                            <div style={{ marginBottom: '2rem', padding: '2rem', background: 'var(--bg-soft)', borderRadius: 'var(--radius-clay)', boxShadow: 'var(--shadow-clay)' }}>
+                                <p style={{ marginTop: 0, marginBottom: '1.5rem', fontSize: '1.25rem', color: '#64748B', fontFamily: 'var(--font-hand)' }}>
                                     YouTube 영상 설명이나 자막을 붙여넣으세요. 타임스탬프는 자동으로 제거됩니다.
                                 </p>
                                 <textarea
@@ -343,10 +355,10 @@ const SetupForm = ({ state, dispatch, onStart }) => {
                                     placeholder="예:&#10;[00:00] 안녕하세요&#10;[00:10] 오늘은 동그라미를 그려볼게요"
                                     value={transcriptText}
                                     onChange={(e) => setTranscriptText(e.target.value)}
-                                    style={{ marginBottom: '1rem' }}
+                                    style={{ marginBottom: '1.5rem' }}
                                 />
                                 <div style={{ textAlign: 'right' }}>
-                                    <button className="btn btn-primary" onClick={handleGenerateSteps}>
+                                    <button className="btn btn-primary" onClick={handleGenerateSteps} style={{ fontSize: '1.25rem' }}>
                                         단계 생성하기
                                     </button>
                                 </div>
@@ -354,9 +366,9 @@ const SetupForm = ({ state, dispatch, onStart }) => {
                         )}
 
                         {state.steps.length === 0 && !showImport && (
-                            <div style={{ textAlign: 'center', padding: '4rem 2rem', border: '2px dashed #E2E8F0', borderRadius: '2rem', background: '#F8FAFC' }}>
-                                <Plus size={40} color="#CBD5E1" style={{ marginBottom: '1rem' }} />
-                                <p style={{ color: '#94A3B8', fontSize: '1.1rem' }}>
+                            <div style={{ textAlign: 'center', padding: '4rem 2rem', background: 'var(--bg-soft)', borderRadius: 'var(--radius-clay)', boxShadow: 'var(--shadow-clay-inner)' }}>
+                                <Plus size={50} color="#9CA3AF" style={{ marginBottom: '1.5rem' }} />
+                                <p style={{ color: '#9CA3AF', fontSize: '1.5rem', fontFamily: 'var(--font-hand)' }}>
                                     수업 단계를 구성해주세요.<br />AI 기능을 사용하거나 수동으로 추가할 수 있습니다.
                                 </p>
                             </div>
@@ -366,29 +378,30 @@ const SetupForm = ({ state, dispatch, onStart }) => {
                             {state.steps.map((step, index) => (
                                 <div key={step.id} style={{
                                     display: 'flex',
-                                    gap: '0.75rem',
+                                    gap: '1rem',
                                     alignItems: 'flex-start',
-                                    background: 'white',
-                                    padding: '1rem',
-                                    borderRadius: '1rem',
-                                    boxShadow: '0 2px 8px rgba(0,0,0,0.05)'
+                                    background: 'var(--bg-soft)',
+                                    padding: '1.5rem',
+                                    borderRadius: 'var(--radius-clay)',
+                                    boxShadow: 'var(--shadow-clay)'
                                 }}>
                                     <div style={{
                                         flexShrink: 0,
-                                        width: '2rem',
-                                        height: '2rem',
-                                        background: 'var(--accent-blue)',
-                                        color: 'white',
+                                        width: '2.5rem',
+                                        height: '2.5rem',
+                                        background: 'var(--bg-soft)',
+                                        color: 'var(--clay-accent)',
                                         borderRadius: '50%',
                                         display: 'flex',
                                         alignItems: 'center',
                                         justifyContent: 'center',
                                         fontWeight: '700',
-                                        fontSize: '0.85rem'
+                                        fontSize: '1.25rem',
+                                        boxShadow: 'var(--shadow-clay-inner)'
                                     }}>
                                         {index + 1}
                                     </div>
-                                    <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+                                    <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                                         <textarea
                                             className="input-field"
                                             value={step.text}
@@ -398,20 +411,22 @@ const SetupForm = ({ state, dispatch, onStart }) => {
                                             rows={2}
                                             style={{ resize: 'none', margin: 0 }}
                                         />
-                                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
                                             <label style={{
                                                 display: 'inline-flex',
                                                 alignItems: 'center',
-                                                gap: '0.25rem',
-                                                padding: '0.5rem 0.75rem',
-                                                background: step.imageUrl ? '#E0F2FE' : '#F1F5F9',
-                                                borderRadius: '0.5rem',
+                                                gap: '0.4rem',
+                                                padding: '0.6rem 1rem',
+                                                background: 'var(--bg-soft)',
+                                                borderRadius: '1rem',
                                                 cursor: 'pointer',
-                                                fontSize: '0.8rem',
-                                                color: step.imageUrl ? 'var(--accent-blue)' : '#64748B',
-                                                transition: 'all 0.2s'
+                                                fontSize: '1.1rem',
+                                                color: step.imageUrl ? 'var(--clay-accent)' : '#64748B',
+                                                transition: 'all 0.2s',
+                                                boxShadow: step.imageUrl ? 'var(--shadow-clay)' : 'var(--shadow-clay-inner)',
+                                                fontFamily: 'var(--font-hand)'
                                             }}>
-                                                <ImagePlus size={14} />
+                                                <ImagePlus size={16} />
                                                 {step.imageUrl ? '이미지 변경' : '이미지 추가'}
                                                 <input
                                                     type="file"
@@ -425,11 +440,11 @@ const SetupForm = ({ state, dispatch, onStart }) => {
                                                     src={step.imageUrl}
                                                     alt={`Step ${index + 1}`}
                                                     style={{
-                                                        height: '40px',
-                                                        width: '60px',
+                                                        height: '50px',
+                                                        width: '75px',
                                                         objectFit: 'cover',
-                                                        borderRadius: '0.25rem',
-                                                        border: '1px solid #E2E8F0'
+                                                        borderRadius: '0.75rem',
+                                                        boxShadow: 'var(--shadow-clay)'
                                                     }}
                                                 />
                                             )}
@@ -438,9 +453,9 @@ const SetupForm = ({ state, dispatch, onStart }) => {
                                     <button
                                         className="btn btn-danger"
                                         onClick={() => handleRemoveStep(index)}
-                                        style={{ padding: '0.5rem', flexShrink: 0 }}
+                                        style={{ padding: '0.75rem', flexShrink: 0, fontSize: '1.25rem' }}
                                     >
-                                        <Trash2 size={16} />
+                                        <Trash2 size={18} />
                                     </button>
                                 </div>
                             ))}
@@ -453,11 +468,11 @@ const SetupForm = ({ state, dispatch, onStart }) => {
                         id="start-btn"
                         className="btn btn-primary"
                         style={{
-                            fontSize: '1.3rem',
-                            padding: '1rem 3rem',
-                            borderRadius: '2rem',
-                            background: 'linear-gradient(135deg, #FF6B9D 0%, #FF8E53 100%)',
-                            boxShadow: '0 10px 30px rgba(255, 107, 157, 0.4)'
+                            fontSize: '2rem',
+                            padding: '1.25rem 3.5rem',
+                            background: 'linear-gradient(135deg, var(--clay-accent) 0%, var(--clay-green) 100%)',
+                            color: 'white',
+                            boxShadow: 'var(--shadow-clay)'
                         }}
                         disabled={!isValid}
                         onClick={onStart}
